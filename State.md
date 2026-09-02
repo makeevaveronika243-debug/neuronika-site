@@ -5,3 +5,4 @@
 2026-09-01: домен/VPS — нет, sitemap/og с example.com (TODO заменить)
 2026-09-01: git init + initial commit
 2026-09-01: локальный запуск — python3 -m http.server 8080
+2026-09-01: подключены 6 фото в filmstrip (works/), порядок 1-6 по согласованию

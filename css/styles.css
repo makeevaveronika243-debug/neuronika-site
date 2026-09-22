@@ -133,11 +133,6 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-.logo::after {
-  content: '.';
-  color: var(--gold);
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -247,6 +242,20 @@ button:focus-visible {
   padding: 0.9rem;
 }
 
+a.film-tile {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+a.film-tile:hover {
+  transform: translateY(-3px);
+}
+
+a.film-tile:hover::before {
+  border-color: var(--line);
+}
+
 .film-tile img {
   position: absolute;
   inset: 0;
@@ -311,6 +320,33 @@ button:focus-visible {
 .hero h1 {
   font-size: clamp(3rem, 6vw + 1rem, 5.6rem);
   margin-bottom: 0.4em;
+}
+
+.brand-title__o {
+  position: relative;
+  display: inline-block;
+}
+
+/* Ударение над «о»: короткая черта, наклон справа налево, конец указывает на букву */
+.brand-title__o::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -0.18em;
+  width: 0.32em;
+  height: max(1.5px, 0.055em);
+  background: var(--gold);
+  transform: translateX(-38%) rotate(-52deg);
+  transform-origin: right bottom;
+  border-radius: 1px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Ударение в шапке — ниже, ближе к «о» */
+.site-header .brand-title__o::after {
+  top: -0.02em;
+  transform: translateX(-40%) rotate(-50deg);
 }
 
 .hero-lead {
@@ -410,6 +446,29 @@ section {
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+.card-photo img,
+.card-photo video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.card-photo video {
+  pointer-events: none;
+}
+
+.card-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(27, 24, 21, 0.25) 0%, transparent 28%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .card-photo::before {
   content: '';
   position: absolute;
@@ -417,18 +476,16 @@ section {
   border: 1px solid var(--line-soft);
   border-radius: inherit;
   pointer-events: none;
+  z-index: 2;
+}
+
+.card-photo:has(img) .card-hint,
+.card-photo:has(video) .card-hint {
+  display: none;
 }
 
 .card:hover .card-photo {
   transform: translateY(-3px);
-}
-
-.card-num {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--ink-faint);
-  align-self: flex-end;
 }
 
 .card-hint {
@@ -481,6 +538,17 @@ section {
   font-size: clamp(1rem, 0.95rem + 0.2vw, 1.1rem);
 }
 
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact-actions--center {
+  justify-content: center;
+}
+
 .contact-meta {
   display: flex;
   align-items: center;
@@ -488,6 +556,17 @@ section {
   font-size: 0.85rem;
   letter-spacing: 0.04em;
   color: var(--ink-faint);
+}
+
+.price-cta {
+  padding-block: clamp(1.5rem, 4vw, 2.5rem) clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid var(--line-soft);
+}
+
+.price-cta .contact-meta {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.25rem;
 }
 
 /* ---------- footer ---------- */
@@ -516,9 +595,338 @@ footer .container {
   font-size: 0.82rem;
 }
 
+/* ---------- страница серии ---------- */
+.series-page {
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(4rem, 8vw, 6rem);
+}
+
+.series-back {
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+  transition: color 0.2s ease;
+}
+
+.series-back:hover {
+  color: var(--gold);
+}
+
+.series-head {
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (min-width: 620px) {
+  .series-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .series-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.series-item {
+  margin: 0;
+  aspect-ratio: 3 / 4;
+  border-radius: 4px;
+  overflow: hidden;
+  background:
+    radial-gradient(130% 100% at 15% 0%, rgba(245, 239, 228, 0.06), transparent 55%),
+    linear-gradient(160deg, var(--panel-2), var(--panel));
+  position: relative;
+}
+
+.series-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.series-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line-soft);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ---------- страница цен ---------- */
+.price-page {
+  padding-block: clamp(2rem, 5vw, 3.5rem) clamp(4rem, 8vw, 6rem);
+}
+
+.price-hero {
+  text-align: center;
+  margin-bottom: 0.35rem;
+}
+
+.price-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.price-block {
+  max-width: 42rem;
+  margin-inline: auto;
+  /* между разделами (фото / видео / сайты) — плотно */
+  margin-bottom: 0;
+}
+
+.price-block:last-child {
+  margin-bottom: 0;
+}
+
+/* меньше зазор между AI-фото / AI-видео / Сайты */
+.price-block + .price-block {
+  margin-top: -1.15rem;
+}
+
+.price-block h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  /* между заголовком раздела и карточками — просторнее */
+  margin: 0 0 clamp(0.85rem, 2.5vw, 1.25rem);
+  text-align: center;
+}
+
+.price-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.price-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  padding: clamp(1rem, 2.5vw, 1.25rem) clamp(1.15rem, 3vw, 1.5rem);
+  border-radius: 6px;
+  background:
+    radial-gradient(130% 100% at 15% 0%, rgba(245, 239, 228, 0.06), transparent 55%),
+    linear-gradient(160deg, var(--panel-2), var(--panel));
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+}
+
+.price-card__name {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.price-card__detail {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+}
+
+.price-card__amount {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.price-card--simple {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.price-card--note {
+  display: block;
+}
+
+.price-card--note .price-card__detail {
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 520px) {
+  .price-card:not(.price-card--note) {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .price-card__amount {
+    text-align: left;
+  }
+}
+
+.nav-link--current {
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+/* ---------- заявка (модальное окно) ---------- */
+body.lead-modal-open {
+  overflow: hidden;
+}
+
+.lead-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.lead-modal[hidden] {
+  display: none;
+}
+
+.lead-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 10, 8, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.lead-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 26rem);
+  max-height: min(92vh, 640px);
+  overflow: auto;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: 8px;
+  border: 1px solid var(--line-soft);
+  background:
+    radial-gradient(120% 80% at 10% 0%, rgba(245, 239, 228, 0.07), transparent 55%),
+    linear-gradient(165deg, var(--panel-2), var(--panel));
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.lead-modal__close {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink-dim);
+  font-size: 1.65rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+}
+
+.lead-modal__close:hover {
+  color: var(--ink);
+}
+
+.lead-modal__title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.55rem;
+  font-weight: 500;
+  margin: 0 2rem 0.35rem 0;
+}
+
+.lead-modal__lead {
+  margin: 0 0 1.25rem;
+  color: var(--ink-dim);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.lead-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lead-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.lead-form__field input,
+.lead-form__field select {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--ink);
+  padding: 0.65rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--line-soft);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.lead-form__field input:focus,
+.lead-form__field select:focus {
+  outline: 2px solid rgba(201, 162, 91, 0.45);
+  outline-offset: 1px;
+  border-color: var(--gold);
+}
+
+.lead-form__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.lead-form__status {
+  min-height: 1.25rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--gold);
+}
+
+.lead-form__status--error {
+  color: #e8a598;
+}
+
+.lead-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
+  }
+
+  .card-photo video {
+    display: none;
+  }
+
+  .card-photo:has(video) .card-hint {
+    display: flex;
   }
 }

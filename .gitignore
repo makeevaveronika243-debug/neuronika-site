@@ -1,14 +1,5 @@
 .DS_Store
 *.tmp
-
-# Секреты — эти файлы никогда не должны попадать в GitHub
 .env
-.env.*
-*.pem
-*.key
-secrets.json
-credentials.json
-
-# Служебные файлы скрипта управления проектом
 .server.pid
 server.log

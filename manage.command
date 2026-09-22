@@ -8,30 +8,63 @@ PORT=8080
 PIDFILE=".server.pid"
 LOGFILE="server.log"
 
-start_server() {
-  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-    echo "Сервер уже запущен (PID $(cat "$PIDFILE")) — http://localhost:$PORT"
-  else
-    nohup python3 -m http.server "$PORT" > "$LOGFILE" 2>&1 &
-    echo $! > "$PIDFILE"
+port_pids() {
+  lsof -ti :"$PORT" 2>/dev/null || true
+}
+
+free_port() {
+  local pids
+  pids=$(port_pids)
+  if [ -n "$pids" ]; then
+    echo "Останавливаю процесс(ы) на порту $PORT: $pids"
+    kill $pids 2>/dev/null || true
     sleep 1
+  fi
+  rm -f "$PIDFILE"
+}
+
+server_running() {
+  [ -n "$(port_pids)" ]
+}
+
+start_server() {
+  if server_running; then
+    local pid
+    pid=$(port_pids | head -1)
+    echo "$pid" > "$PIDFILE"
+    echo "Сервер уже работает — http://localhost:$PORT (PID $pid)"
+    echo "Открывайте сайт только по этой ссылке (не через файл index.html)."
+    return
+  fi
+
+  free_port
+  nohup python3 server.py >> "$LOGFILE" 2>&1 &
+  echo $! > "$PIDFILE"
+  sleep 1
+
+  if server_running; then
     echo "Сервер запущен: http://localhost:$PORT"
+    echo "Открывайте сайт только по этой ссылке (не через файл index.html)."
+  else
+    echo "Не удалось запустить сервер. Последние строки $LOGFILE:"
+    tail -8 "$LOGFILE" 2>/dev/null || true
+    rm -f "$PIDFILE"
   fi
 }
 
 stop_server() {
-  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
-    kill "$(cat "$PIDFILE")"
-    rm -f "$PIDFILE"
+  if server_running; then
+    free_port
     echo "Сервер остановлен."
   else
-    echo "Сервер и так не запущен."
     rm -f "$PIDFILE"
+    echo "На порту $PORT ничего не запущено."
   fi
 }
 
 restart_server() {
-  stop_server
+  echo "Перезапуск…"
+  free_port
   sleep 1
   start_server
 }

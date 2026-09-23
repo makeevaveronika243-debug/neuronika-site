@@ -147,7 +147,7 @@ class SiteHandler(SimpleHTTPRequestHandler):
         phone = (data.get("phone") or "").strip()
         contact_method = (data.get("contact_method") or "").strip()
 
-        allowed_methods = {"Telegram", "Телефон", "WhatsApp", "Email"}
+        allowed_methods = {"Telegram", "Max", "Телефон", "WhatsApp", "Email"}
         errors: list[str] = []
         if not name or len(name) > 120:
             errors.append("name")

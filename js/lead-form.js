@@ -36,6 +36,7 @@
       '      <select name="contact_method" required>' +
       '        <option value="" disabled selected>Выберите</option>' +
       '        <option value="Telegram">Telegram</option>' +
+      '        <option value="Max">Max</option>' +
       '        <option value="Телефон">Телефон</option>' +
       '        <option value="WhatsApp">WhatsApp</option>' +
       '        <option value="Email">Email</option>' +

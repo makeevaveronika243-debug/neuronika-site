@@ -8,6 +8,7 @@
 2026-09-23: Вебмастер — права подтверждены, sitemap добавлен (prod)
 2026-09-23: series/01-06 — убран подзаголовок «Кадры из одной серии…»
 2026-09-23: ссылки на главную / и /#services; server 301 /index.html→/
+2026-09-24: заявка — способ связи Max в lead-form + server.py
 2026-09-23: favicon — PNG+ICO, «Н» линиями (не text); все страницы /favicon.ico
 2026-09-23: index.html google-site-verification (Search Console)
 2026-09-01: git init + initial commit

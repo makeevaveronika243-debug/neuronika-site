@@ -104,6 +104,16 @@ class SiteHandler(SimpleHTTPRequestHandler):
         self.send_header("X-Content-Type-Options", "nosniff")
         super().end_headers()
 
+    def do_GET(self) -> None:
+        # Канонический адрес главной — /, не /index.html
+        path = urllib.parse.unquote(self.path.split("?", 1)[0].rstrip("/") or "/")
+        if path == "/index.html":
+            self.send_response(HTTPStatus.MOVED_PERMANENTLY)
+            self.send_header("Location", "/")
+            self.end_headers()
+            return
+        super().do_GET()
+
     def do_OPTIONS(self) -> None:
         if self.path == "/api/lead":
             self.send_response(HTTPStatus.NO_CONTENT)

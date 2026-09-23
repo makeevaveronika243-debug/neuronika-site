@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# TODO: заменить example.com на реальный домен после покупки
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://neironika-ai-studio.ru/sitemap.xml

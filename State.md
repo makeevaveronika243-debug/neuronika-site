@@ -7,6 +7,7 @@
 2026-09-23: index.html yandex-verification meta (Вебмастер)
 2026-09-23: Вебмастер — права подтверждены, sitemap добавлен (prod)
 2026-09-23: series/01-06 — убран подзаголовок «Кадры из одной серии…»
+2026-09-23: favicon.svg — буква N + точка; index rel=icon абс. путь
 2026-09-01: git init + initial commit
 2026-09-01: локальный запуск — python3 -m http.server 8080
 2026-09-01: подключены 6 фото в filmstrip (works/), порядок 1-6 по согласованию

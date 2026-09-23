@@ -4,6 +4,7 @@
 2026-09-01: стек — чистая статика, без сборщика
 2026-09-01: домен/VPS — позже neironika-ai-studio.ru на VPS
 2026-09-23: sitemap/robots/og:url → https://neironika-ai-studio.ru
+2026-09-23: index.html yandex-verification meta (Вебмастер)
 2026-09-01: git init + initial commit
 2026-09-01: локальный запуск — python3 -m http.server 8080
 2026-09-01: подключены 6 фото в filmstrip (works/), порядок 1-6 по согласованию
